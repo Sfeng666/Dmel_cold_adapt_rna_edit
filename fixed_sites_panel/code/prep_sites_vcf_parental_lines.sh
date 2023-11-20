@@ -24,7 +24,7 @@ echo "Decompression ends at: $(date)" >> $path_log
 
 # 2. extract sites that have the same genotype fixed across all extracted parental lines from above vcf.gz files
 echo "Extracting sites starts at: $(date)" >> $path_log
-python $path_script_fixed_sites --path_parental_vcfs $path_vcf_parental --path_out_vcf $path_vcf_fixed
+python $path_script_fixed_sites --path_parental_vcfs $path_vcf_parental --path_out_vcf $path_vcf_fixed &
 python $path_script_fixed_sites --path_parental_vcfs $path_vcf_parental --path_out_vcf $path_vcf_fixed >> $path_log 2>&1 &
 echo "Extracting sites ends at: $(date)" >> $path_log
 

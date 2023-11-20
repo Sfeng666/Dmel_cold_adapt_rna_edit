@@ -73,7 +73,7 @@ def compare_site_genotype(file_paths, path_out_vcf):
                     if list(genotype for genotype in genotypes if len(set(genotype)) == 2) != []: # filter sites that are heterozygous in any parental line
                         continue
 
-                    alleles = [line[4:6] for line in lines_split]  # Extract REF and ALT column (refernce and alternative alleles)
+                    alleles = [line[3:5] for line in lines_split]  # Extract REF and ALT column (refernce and alternative alleles)
                     fixed_alleles = [alleles[i][int(list(set(genotypes[i]))[0])] for i in range(len(genotypes))]   # generate a list of alleles that are fixed across all parental lines, using genotype number as the index on alleles
                     if len(set(fixed_alleles)) == 1: # extract sites that are fixed on the same allele across all parental lines
                         # keep writing the site information to the output file in VCF 4.2 format during the loop, instead of write them all at once after the loop
