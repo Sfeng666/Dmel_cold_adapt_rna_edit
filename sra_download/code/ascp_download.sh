@@ -1,0 +1,1 @@
+/home/boqin/software/miniconda3/envs/rna_edit/bin/ascp -T -i /home/boqin/software/miniconda3/envs/rna_edit/etc/asperaweb_id_dsa.openssh -k 1 -T -l 500m -P33001 --mode recv --host fasp.sra.ebi.ac.uk --user era-fasp --file-list dmel_cold_rnaseq_fastq_list.txt ../fastq
