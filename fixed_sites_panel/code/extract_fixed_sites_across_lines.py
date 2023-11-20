@@ -1,5 +1,6 @@
 # This script extract sites that have the same allele fixed across all extracted parental lines from above vcf.gz files
 import os
+import gzip
 from optparse import OptionParser
 
 # each vcf.gz has the same genomic sites of a parental line
@@ -27,16 +28,18 @@ parser.add_option("--path_out_vcf",
                     action="store",
                     dest="path_out_vcf",
                     help="path to the output VCF file that include sites fixed across all parental lines (.vcf)",
-                    metavar = 'PATH')
-                                                                                                    
-(options,args) = parser.parse_args()
-#############################
+                    metavar = 'PATH')                                                                 
+(options, args) = parser.parse_args()
 
-### parameters ###
+# Get the values of the command line options
 path_parental_vcfs = options.path_parental_vcfs
 path_out_vcf = options.path_out_vcf
 
-# define a function to get all file paths under a directory
+# # arguments for test only
+# path_parental_vcfs = '/raid10/boqin/data/dmel_cold_tolerance/SNP/parental_lines_vcfs'
+# path_out_vcf = 'fixed_sites_panel/data/fixed_sites_panel.vcf'
+
+# Define a function to get all file paths under a directory
 def get_file_paths(directory_path):
     file_paths = []
     for root, _, files in os.walk(directory_path):
@@ -46,7 +49,7 @@ def get_file_paths(directory_path):
 
 # define a function to compare genotype site-by-site across all parental lines
 def compare_site_genotype(file_paths, path_out_vcf):
-    file_handles = [open(file, 'r') for file in file_paths]
+    file_handles = [gzip.open(file, 'rt') for file in file_paths]
 
     with open(path_out_vcf, 'a') as out:
         num_line = 0
