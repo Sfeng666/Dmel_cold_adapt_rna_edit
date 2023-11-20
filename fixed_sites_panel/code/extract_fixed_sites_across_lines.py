@@ -74,14 +74,14 @@ def compare_site_genotype(file_paths, path_out_vcf):
                         continue
 
                     alleles = [line[4:6] for line in lines_split]  # Extract REF and ALT column (refernce and alternative alleles)
-                    fixed_alleles = [alleles[i][set(genotypes[i])[0]] for i in range(len(genotypes))]   # generate a list of alleles that are fixed across all parental lines, using genotype number as the index on alleles
+                    fixed_alleles = [alleles[i][list(set(genotypes[i]))[0]] for i in range(len(genotypes))]   # generate a list of alleles that are fixed across all parental lines, using genotype number as the index on alleles
                     if len(set(fixed_alleles)) == 1: # extract sites that are fixed on the same allele across all parental lines
                         # keep writing the site information to the output file in VCF 4.2 format during the loop, instead of write them all at once after the loop
                         # this is to save memory, because the output file can be very large
                         # the output file is a standard VCF 4.2 format with header
                         # the header is the same as the header of the input files
                         # the output file is saved as 'fixed_sites_panel/data/sites_parental_lines.txt'
-                        out.write('\t'.join(lines_split[0][:3] + ['.', set(fixed_alleles)[0], '.', '.', '.', '.', '.']) + '\n')
+                        out.write('\t'.join(lines_split[0][:3] + ['.', list(set(fixed_alleles))[0], '.', '.', '.', '.', '.']) + '\n')
                 else:
                     print("Number of lines in files differs.")
                     break
