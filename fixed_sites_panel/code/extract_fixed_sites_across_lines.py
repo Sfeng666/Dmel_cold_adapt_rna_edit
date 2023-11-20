@@ -52,14 +52,14 @@ def compare_site_genotype(file_paths, path_out_vcf):
     file_handles = [gzip.open(file, 'rt') for file in file_paths]
 
     with open(path_out_vcf, 'a') as out:
-        num_line = 0
+        header = ['#CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER', 'INFO', 'FORMAT', 'GENOTYPE']  # Read header from each file
+        out.write('\t'.join(header) + '\n')    # write the same input header to the output file
+
         while True:
             lines = [file.readline().strip() for file in file_handles]  # Read one line from each file
             lines_split = [line.split('\t') for line in lines]  # Split columns by tab
             if any(lines):  # Check if at least one file still has lines
                 if all(lines):  # Check if all files have non-empty lines
-                    if num_line == 0:
-                        out.write(lines[0] + '\n')    # write the same input header to the output file
 
                     qual = [line[5] for line in lines_split]  # Extract QUAL column
                     if '.' in qual: # filter sites that have missing genotype in any parental line
@@ -87,7 +87,6 @@ def compare_site_genotype(file_paths, path_out_vcf):
                     break
             else:
                 break
-            num_line += 1
 
     # Close all file handles
     for file_handle in file_handles:
