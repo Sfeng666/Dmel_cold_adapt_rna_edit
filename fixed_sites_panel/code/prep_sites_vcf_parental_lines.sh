@@ -5,7 +5,7 @@ path_vcf_tar=/raid10/backups/octavius/nexus1.1/POOL_sites_vcfs.tar  # path to th
 path_vcf_parental=/raid10/boqin/data/dmel_cold_tolerance/SNP/parental_lines_vcfs  # path to the folder containing the vcf files for parental lines
 path_filereport=fixed_sites_panel/data/filereport_read_run_PRJNA720479_include_samplename.txt   # path to the file containing the sample names 
 path_log=fixed_sites_panel/data/log_prep_sites_vcf_parental_lines.txt  # path to the log file
-path_script_fixed_sites=fixed_sites_panel/code/extract_fixed_sites_from_vcf.py  # path to the python script that extracts fixed sites from vcf files
+path_script_fixed_sites=fixed_sites_panel/code/extract_fixed_sites_across_lines.py  # path to the python script that extracts fixed sites from vcf files
 path_vcf_fixed=fixed_sites_panel/data/fixed_sites_panel.vcf  # path to vcf file containing the fixed sites for parental lines (maintained as .vcf only for using 'bcftools consensus' later, only useful information is the first four column)
 path_ref_genome=/raid10/Tiago/PigmCages/scripts/alignment_software/dmel_ref/DmelRef.fasta # path to the reference genome sequence (release 5)
 path_ref_genome_mutated=fixed_sites_panel/data/DmelRef_mutated_at_fixed_sites.fasta  # path to the reference genome sequence (release 5) mutated with the fixed alterinative alleles
@@ -24,6 +24,7 @@ echo "Decompression ends at: $(date)" >> $path_log
 
 # 2. extract sites that have the same genotype fixed across all extracted parental lines from above vcf.gz files
 echo "Extracting sites starts at: $(date)" >> $path_log
+python $path_script_fixed_sites $path_vcf_parental $path_vcf_fixed
 python $path_script_fixed_sites $path_vcf_parental $path_vcf_fixed >> $path_log 2>&1 &
 echo "Extracting sites ends at: $(date)" >> $path_log
 
